@@ -1,0 +1,96 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    runs-on: ubuntu-24.04
+    outputs:
+      features: ${{ steps.matrix.outputs.features }}
+      common: ${{ steps.filter.outputs.shared }}
+      apphost: ${{ steps.filter.outputs.apphost }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
+        id: filter
+        with:
+          filters: |
+            shared:
+              - 'src/Common*/**'
+              - 'test/Common*/**'
+              - 'test/Directory.Build.props'
+              - 'Directory.Build.props'
+              - 'Directory.Packages.props'
+              - 'global.json'
+              - 'nuget.config'
+              - '.editorconfig'
+              - '.github/workflows/**'
+            apphost:
+              - 'src/AppHost/**'
+            Stops:
+              - 'src/Features/Stops/**'
+              - 'test/Features/Stops/**'
+            Trips:
+              - 'src/Features/Trips/**'
+              - 'test/Features/Trips/**'
+            Alerts:
+              - 'src/Features/Alerts/**'
+              - 'test/Features/Alerts/**'
+            Ingestion:
+              - 'src/Features/Ingestion/**'
+              - 'test/Features/Ingestion/**'
+      - name: Build feature matrix
+        id: matrix
+        env:
+          SHARED: ${{ steps.filter.outputs.shared }}
+          CHANGED: ${{ steps.filter.outputs.changes }}
+        run: |
+          all='["Stops","Trips","Alerts","Ingestion"]'
+          if [ "$SHARED" = "true" ]; then
+            features="$all"
+          else
+            features=$(jq -c --argjson all "$all" '[.[] | select(. as $f | $all | index($f))]' <<<"$CHANGED")
+          fi
+          echo "features=$features" >> "$GITHUB_OUTPUT"
+
+  feature:
+    needs: changes
+    if: needs.changes.outputs.features != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        feature: ${{ fromJson(needs.changes.outputs.features) }}
+    uses: ./.github/workflows/_feature.yml
+    with:
+      feature: ${{ matrix.feature }}
+
+  apphost:
+    needs: changes
+    if: needs.changes.outputs.apphost == 'true' || needs.changes.outputs.common == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          global-json-file: global.json
+      - run: dotnet build src/AppHost/GleisGrain.AppHost.csproj --configuration Release
+
+  # Single required check for branch protection; skipped jobs count as success.
+  ci-ok:
+    if: always()
+    needs: [changes, feature, apphost]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Fail if any job failed or was cancelled
+        run: |
+          if [ "${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}" = "true" ]; then exit 1; fi
