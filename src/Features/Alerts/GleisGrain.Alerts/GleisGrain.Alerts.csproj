@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Orleans.Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../Common/GleisGrain.Common.csproj" />
+    <ProjectReference Include="../GleisGrain.Alerts.Contracts/GleisGrain.Alerts.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="GleisGrain.Alerts.Tests" />
+  </ItemGroup>
+
+</Project>
