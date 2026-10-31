@@ -19,6 +19,7 @@ jobs:
       features: ${{ steps.matrix.outputs.features }}
       common: ${{ steps.filter.outputs.shared }}
       apphost: ${{ steps.filter.outputs.apphost }}
+      modules: ${{ steps.filter.outputs.modules }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4.0.3
@@ -29,6 +30,7 @@ jobs:
               - 'src/Common*/**'
               - 'test/Common*/**'
               - 'test/Directory.Build.props'
+              - 'src/Features/Directory.Build.props'
               - 'Directory.Build.props'
               - 'Directory.Packages.props'
               - 'global.json'
@@ -37,6 +39,10 @@ jobs:
               - '.github/workflows/**'
             apphost:
               - 'src/AppHost/**'
+              - 'src/Host/**'
+            modules:
+              - 'src/Host/**'
+              - 'test/Modules/**'
             Stops:
               - 'src/Features/Stops/**'
               - 'test/Features/Stops/**'
@@ -85,10 +91,22 @@ jobs:
           global-json-file: global.json
       - run: dotnet build src/AppHost/GleisGrain.AppHost.csproj --configuration Release
 
+  # Module boundaries and the composition of all modules into one silo.
+  modules:
+    needs: changes
+    if: needs.changes.outputs.features != '[]' || needs.changes.outputs.common == 'true' || needs.changes.outputs.apphost == 'true' || needs.changes.outputs.modules == 'true'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          global-json-file: global.json
+      - run: dotnet test --project test/Modules/GleisGrain.Modules.Tests/GleisGrain.Modules.Tests.csproj --configuration Release
+
   # Single required check for branch protection; skipped jobs count as success.
   ci-ok:
     if: always()
-    needs: [changes, feature, apphost]
+    needs: [changes, feature, apphost, modules]
     runs-on: ubuntu-24.04
     steps:
       - name: Fail if any job failed or was cancelled
