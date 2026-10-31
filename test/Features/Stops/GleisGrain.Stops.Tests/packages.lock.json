@@ -486,39 +486,6 @@
           "System.Memory.Data": "10.0.3"
         }
       },
-      "Microsoft.Orleans.Runtime": {
-        "type": "Transitive",
-        "resolved": "10.4.0",
-        "contentHash": "oHXZf8BPfvqWKpvhuYuslZMrE/EEywaNU3BL/8udMhJt2xc52RBaGpJlYCpNudmXE8iH9ySrRajf5IvHK1/wzg==",
-        "dependencies": {
-          "Microsoft.AspNetCore.Connections.Abstractions": "10.0.3",
-          "Microsoft.CodeAnalysis.Analyzers": "5.9.0",
-          "Microsoft.CodeAnalysis.Common": "5.0.0",
-          "Microsoft.CodeAnalysis.Workspaces.Common": "5.0.0",
-          "Microsoft.Extensions.Configuration": "10.0.5",
-          "Microsoft.Extensions.Configuration.Abstractions": "10.0.5",
-          "Microsoft.Extensions.Configuration.Binder": "10.0.5",
-          "Microsoft.Extensions.Configuration.Json": "10.0.5",
-          "Microsoft.Extensions.DependencyInjection": "10.0.5",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5",
-          "Microsoft.Extensions.DependencyModel": "10.0.5",
-          "Microsoft.Extensions.Hosting": "10.0.5",
-          "Microsoft.Extensions.Hosting.Abstractions": "10.0.5",
-          "Microsoft.Extensions.Logging": "10.0.5",
-          "Microsoft.Extensions.Logging.Abstractions": "10.0.5",
-          "Microsoft.Extensions.Logging.Console": "10.0.5",
-          "Microsoft.Extensions.Logging.Debug": "10.0.5",
-          "Microsoft.Extensions.ObjectPool": "10.0.5",
-          "Microsoft.Extensions.Options": "10.0.5",
-          "Microsoft.Extensions.Options.ConfigurationExtensions": "10.0.5",
-          "Microsoft.Orleans.Core": "10.4.0",
-          "Newtonsoft.Json": "13.0.4",
-          "Polly": "8.6.4",
-          "Polly.Extensions": "8.6.5",
-          "System.IO.Hashing": "10.0.3",
-          "System.Memory.Data": "10.0.3"
-        }
-      },
       "Microsoft.Orleans.Serialization": {
         "type": "Transitive",
         "resolved": "10.4.0",
@@ -793,7 +760,8 @@
         "dependencies": {
           "GleisGrain.Common": "[1.0.0, )",
           "GleisGrain.Stops.Contracts": "[1.0.0, )",
-          "Microsoft.Orleans.Server": "[10.4.0, )"
+          "Microsoft.Orleans.Runtime": "[10.4.0, )",
+          "Microsoft.Orleans.Sdk": "[10.4.0, )"
         }
       },
       "gleisgrain.stops.contracts": {
@@ -909,6 +877,40 @@
           "Microsoft.Extensions.Options.ConfigurationExtensions": "10.0.5",
           "Microsoft.Orleans.Reminders": "10.4.0",
           "Microsoft.Orleans.Runtime": "10.4.0",
+          "Newtonsoft.Json": "13.0.4",
+          "Polly": "8.6.4",
+          "Polly.Extensions": "8.6.5",
+          "System.IO.Hashing": "10.0.3",
+          "System.Memory.Data": "10.0.3"
+        }
+      },
+      "Microsoft.Orleans.Runtime": {
+        "type": "CentralTransitive",
+        "requested": "[10.4.0, )",
+        "resolved": "10.4.0",
+        "contentHash": "oHXZf8BPfvqWKpvhuYuslZMrE/EEywaNU3BL/8udMhJt2xc52RBaGpJlYCpNudmXE8iH9ySrRajf5IvHK1/wzg==",
+        "dependencies": {
+          "Microsoft.AspNetCore.Connections.Abstractions": "10.0.3",
+          "Microsoft.CodeAnalysis.Analyzers": "5.9.0",
+          "Microsoft.CodeAnalysis.Common": "5.0.0",
+          "Microsoft.CodeAnalysis.Workspaces.Common": "5.0.0",
+          "Microsoft.Extensions.Configuration": "10.0.5",
+          "Microsoft.Extensions.Configuration.Abstractions": "10.0.5",
+          "Microsoft.Extensions.Configuration.Binder": "10.0.5",
+          "Microsoft.Extensions.Configuration.Json": "10.0.5",
+          "Microsoft.Extensions.DependencyInjection": "10.0.5",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5",
+          "Microsoft.Extensions.DependencyModel": "10.0.5",
+          "Microsoft.Extensions.Hosting": "10.0.5",
+          "Microsoft.Extensions.Hosting.Abstractions": "10.0.5",
+          "Microsoft.Extensions.Logging": "10.0.5",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.5",
+          "Microsoft.Extensions.Logging.Console": "10.0.5",
+          "Microsoft.Extensions.Logging.Debug": "10.0.5",
+          "Microsoft.Extensions.ObjectPool": "10.0.5",
+          "Microsoft.Extensions.Options": "10.0.5",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "10.0.5",
+          "Microsoft.Orleans.Core": "10.4.0",
           "Newtonsoft.Json": "13.0.4",
           "Polly": "8.6.4",
           "Polly.Extensions": "8.6.5",
