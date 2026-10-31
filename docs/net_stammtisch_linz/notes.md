@@ -58,7 +58,7 @@ Data: Linz AG EFA server, XML over HTTP. Terms of use and rate limits: not check
 - Membership in the shared `orleans` database (Postgres here, Redis or Azure Table are the other usual choices). Demo query on the big screen: `SELECT * FROM orleansmembershiptable;` in pgAdmin. The audience sees the dead silo flip.
 - Cover: membership, grain directory, placement. See [how-orleans-works.md](how-orleans-works.md).
 - Placement: `[PreferLocalPlacement]` and others. Default since Orleans 9.2 is resource-optimized, before that random: [TBD demo]
-- One cluster, one silo per context (API and silo in one process, heterogeneous silos).
+- Modular monolith: one host contains all modules (API and silo in one process). Replicas of it form one cluster of identical silos. Splitting into one silo type per module is possible later.
 - Orleans SQL schema loaded into Postgres: [TBD] (needed before anything runs)
 
 ### 27-33 Versioning (most talks skip this)
