@@ -8,26 +8,23 @@ flowchart LR
     client([Browser / API client])
     efa[(Linz AG EFA server<br/>XML over HTTP)]
 
-    client -- "HTTP, Scalar" --> api
+    client -- "HTTP, Scalar" --> host
 
-    subgraph api [API edge, per context]
+    subgraph host [GleisGrain.Host: one process, one Orleans silo]
         direction TB
-        endpoints[Minimal API endpoints]
+        subgraph modules [Modules]
+            direction LR
+            stops[Stops<br/>StopGrain]
+            trips[Trips<br/>TripGrain]
+            alerts[Alerts<br/>AlertGrain]
+            ingestion[Ingestion<br/>SourceGrain<br/>rate limiter + XML parser]
+        end
+        common[Common: HTTP, Orleans, OpenTelemetry]
     end
 
-    subgraph cluster [Orleans cluster: gleis-grain]
-        direction TB
-        stops[Stops silo<br/>StopGrain]
-        trips[Trips silo<br/>TripGrain]
-        alerts[Alerts silo<br/>AlertGrain]
-        ingestion[Ingestion silo<br/>SourceGrain<br/>rate limiter + XML parser]
-    end
-
-    endpoints --> stops & trips & alerts & ingestion
-
-    stops -. "reminder 1 min,<br/>timer while watched" .-> ingestion
-    alerts -. reminder .-> ingestion
-    trips -.-> stops
+    stops -. "via Contracts: reminder 1 min,<br/>timer while watched" .-> ingestion
+    alerts -. "via Contracts: reminder" .-> ingestion
+    trips -. "via Contracts" .-> stops
     ingestion -. "XML_TRIP_REQUEST2,<br/>departure monitor" .-> efa
 
     subgraph pg [Postgres, one container]
@@ -38,15 +35,15 @@ flowchart LR
         d4[(ingestion)]
     end
 
-    cluster --> orleansdb
+    host --> orleansdb
     stops --> d1
     trips --> d2
     alerts --> d3
     ingestion --> d4
 
-    apphost{{Aspire AppHost}} -. starts .-> cluster
+    apphost{{Aspire AppHost}} -. starts .-> host
     apphost -. starts .-> pg
-    cluster -. OTLP .-> dashboard[Aspire dashboard]
+    host -. OTLP .-> dashboard[Aspire dashboard]
 ```
 
-Silos of different contexts join the same cluster and call each other through the `Contracts` projects only.
+Modules call each other through the `Contracts` projects only. Several replicas of the host form one Orleans cluster of identical silos. Splitting a module into its own deployable later needs only a small host that calls its `Add...Module` and `Map...Endpoints`.
