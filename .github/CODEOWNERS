@@ -6,3 +6,7 @@
 /src/Features/Alerts/ @MhouneyLH
 /src/Features/Ingestion/ @MhouneyLH
 /test/Features/ @MhouneyLH
+
+# Host and shared pieces
+/src/Host/ @MhouneyLH
+/test/Modules/ @MhouneyLH
