@@ -1,0 +1,39 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AppHost/GleisGrain.AppHost.csproj" />
+    <Project Path="src/Common/GleisGrain.Common.csproj" />
+    <Project Path="src/Common.Abstractions/GleisGrain.Common.Abstractions.csproj" />
+  </Folder>
+  <Folder Name="/src/Features/Stops/">
+    <Project Path="src/Features/Stops/GleisGrain.Stops/GleisGrain.Stops.csproj" />
+    <Project Path="src/Features/Stops/GleisGrain.Stops.Contracts/GleisGrain.Stops.Contracts.csproj" />
+  </Folder>
+  <Folder Name="/src/Features/Trips/">
+    <Project Path="src/Features/Trips/GleisGrain.Trips/GleisGrain.Trips.csproj" />
+    <Project Path="src/Features/Trips/GleisGrain.Trips.Contracts/GleisGrain.Trips.Contracts.csproj" />
+  </Folder>
+  <Folder Name="/src/Features/Alerts/">
+    <Project Path="src/Features/Alerts/GleisGrain.Alerts/GleisGrain.Alerts.csproj" />
+    <Project Path="src/Features/Alerts/GleisGrain.Alerts.Contracts/GleisGrain.Alerts.Contracts.csproj" />
+  </Folder>
+  <Folder Name="/src/Features/Ingestion/">
+    <Project Path="src/Features/Ingestion/GleisGrain.Ingestion/GleisGrain.Ingestion.csproj" />
+    <Project Path="src/Features/Ingestion/GleisGrain.Ingestion.Contracts/GleisGrain.Ingestion.Contracts.csproj" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/Common/GleisGrain.Common.Tests/GleisGrain.Common.Tests.csproj" />
+    <Project Path="test/Common.Abstractions/GleisGrain.Common.Abstractions.Tests/GleisGrain.Common.Abstractions.Tests.csproj" />
+  </Folder>
+  <Folder Name="/test/Features/Stops/">
+    <Project Path="test/Features/Stops/GleisGrain.Stops.Tests/GleisGrain.Stops.Tests.csproj" />
+  </Folder>
+  <Folder Name="/test/Features/Trips/">
+    <Project Path="test/Features/Trips/GleisGrain.Trips.Tests/GleisGrain.Trips.Tests.csproj" />
+  </Folder>
+  <Folder Name="/test/Features/Alerts/">
+    <Project Path="test/Features/Alerts/GleisGrain.Alerts.Tests/GleisGrain.Alerts.Tests.csproj" />
+  </Folder>
+  <Folder Name="/test/Features/Ingestion/">
+    <Project Path="test/Features/Ingestion/GleisGrain.Ingestion.Tests/GleisGrain.Ingestion.Tests.csproj" />
+  </Folder>
+</Solution>
