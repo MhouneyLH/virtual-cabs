@@ -2,6 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/AppHost/GleisGrain.AppHost.csproj" />
     <Project Path="src/Common/GleisGrain.Common.csproj" />
+    <Project Path="src/Host/GleisGrain.Host.csproj" />
     <Project Path="src/Common.Abstractions/GleisGrain.Common.Abstractions.csproj" />
   </Folder>
   <Folder Name="/src/Features/Stops/">
@@ -21,6 +22,7 @@
     <Project Path="src/Features/Ingestion/GleisGrain.Ingestion.Contracts/GleisGrain.Ingestion.Contracts.csproj" />
   </Folder>
   <Folder Name="/test/">
+    <Project Path="test/Modules/GleisGrain.Modules.Tests/GleisGrain.Modules.Tests.csproj" />
     <Project Path="test/Common/GleisGrain.Common.Tests/GleisGrain.Common.Tests.csproj" />
     <Project Path="test/Common.Abstractions/GleisGrain.Common.Abstractions.Tests/GleisGrain.Common.Abstractions.Tests.csproj" />
   </Folder>
