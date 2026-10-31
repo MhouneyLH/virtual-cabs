@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Orleans.Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../../src/Features/Stops/GleisGrain.Stops/GleisGrain.Stops.csproj" />
+    <ProjectReference Include="../../../src/Features/Trips/GleisGrain.Trips/GleisGrain.Trips.csproj" />
+    <ProjectReference Include="../../../src/Features/Alerts/GleisGrain.Alerts/GleisGrain.Alerts.csproj" />
+    <ProjectReference Include="../../../src/Features/Ingestion/GleisGrain.Ingestion/GleisGrain.Ingestion.csproj" />
+  </ItemGroup>
+
+</Project>
