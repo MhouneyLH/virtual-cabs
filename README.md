@@ -4,7 +4,7 @@ Showcase for Microsoft Orleans built on public transport data from Linz AG. Stop
 
 The project is the demo for a talk about the actor paradigm at the .NET Stammtisch Linz.
 
-> Work in progress. Right now this is only the scaffold: four contexts with one example endpoint each. The XML client and the real grains are still missing.
+> Work in progress. Right now this is only the scaffold: four modules with one example endpoint each. The XML client and the real grains are still missing.
 
 ## Data source
 
@@ -18,7 +18,7 @@ Everything runs in the devcontainer, so you only need VS Code with the Dev Conta
 
 1. Open the repo in VS Code and choose "Reopen in Container".
 2. Start the AppHost: `dotnet run --project src/AppHost`
-3. The Aspire dashboard is on http://localhost:15000. It shows Postgres, pgAdmin and one service per context. Every service has its API docs under `/scalar`.
+3. The Aspire dashboard is on http://localhost:15000. It shows Postgres, pgAdmin and the one `gleis-grain` service that contains all modules. The API docs are under `/scalar`.
 
 The Orleans SQL schema is not loaded into the databases yet, so the services will crash on startup until that is done.
 
@@ -37,29 +37,43 @@ Planned calls between them: Stops and Alerts fetch through Ingestion, Trips read
 
 ## Layout
 
+This is a modular monolith: one deployable (`src/Host`) that contains all bounded contexts as modules.
+
 ```
 src/
-  AppHost/            Aspire host, starts Postgres and all services
-  Common/             options, HTTP, OpenTelemetry and Orleans setup shared by all contexts
+  AppHost/            Aspire host, starts Postgres and the Host
+  Host/               the one deployable: composition root, calls every module
+  Common/             options, HTTP, OpenTelemetry and Orleans setup shared by all modules
   Common.Abstractions/ tiny shared base for strongly typed ids, safe to reference from Contracts
-  Features/<Context>/
-    GleisGrain.<Context>/            API and silo in one process
-      Endpoints/                     one file per endpoint: request, response, handler
-      Domain/                        domain model, persisted state, grain
-      <Context>Options.cs
+  Features/<Module>/
+    GleisGrain.<Module>/            the module, a class library
+      <Module>Module.cs             its only public type: Add...Module and Map...Endpoints
+      Endpoints/                    one file per endpoint: request, response, handler
+      Domain/                       domain model, persisted state, grain
+      <Module>Options.cs
       Metrics.cs  Logs.cs  Errors.cs
-    GleisGrain.<Context>.Contracts/  grain interfaces, snapshots and the context's ids
-test/                 mirrors src
+    GleisGrain.<Module>.Contracts/  grain interfaces, snapshots and the module's ids
+test/                 mirrors src, plus test/Modules for boundary and composition tests
 docs/                 architecture diagram and talk notes
 ```
+
+Rules that keep it modular (checked by `test/Modules`):
+- A module exposes only its `<Module>Module` class, everything else is `internal`.
+- Modules call each other only through the other module's Contracts project, never its internals.
+- Contracts do not reference modules, `Common` or ASP.NET Core.
+- Every module has its own database, options section, metrics and tests.
+
+Adding a module means: one project and its Contracts, one `Add...Module` and one `Map...Endpoints` call in `src/Host/Program.cs`, and its storage and meter name in the same file.
+
+Splitting back into several deployables is possible later: a small host per module that calls only its own `Add...Module` and `Map...Endpoints`.
 
 ## Orleans and the domain model
 
 The domain class (for example `Stop`) is plain C# and knows nothing about Orleans. The grain is a thin wrapper that loads the state, calls the domain class and writes the state back. That keeps the business rules testable without a silo.
 
-API and silo run in the same process per context, so endpoints call `IGrainFactory` directly.
+API and silo run in the same process, so endpoints call `IGrainFactory` directly. The host is one silo with the grains of every module, and several replicas of it form a cluster of identical silos.
 
-All contexts join one Orleans cluster. Each context only hosts its own grains and talks to the others through their Contracts project. Cluster membership and reminders live in the shared `orleans` database. Grain state lives in the context's own database.
+Modules talk to each other through grain calls on their Contracts interfaces. Cluster membership and reminders live in the shared `orleans` database. Grain state lives in each module's own database.
 
 ## Strongly typed ids
 
@@ -91,4 +105,4 @@ Architecture diagram: [docs/architecture.md](docs/architecture.md).
 - Warnings are errors. Style and analyzer rules are in `.editorconfig`.
 - Postgres runs as one container with one database per context plus `orleans`.
 - Tests use xunit.v3. Integration tests will later use the AppHost.
-- CI runs only the contexts that were touched. A change to Common, build props or the workflows runs all of them.
+- CI runs only the modules that were touched, plus the boundary and composition tests. A change to Common, build props or the workflows runs all of them.
