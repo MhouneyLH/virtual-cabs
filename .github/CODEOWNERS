@@ -1,0 +1,8 @@
+* @MhouneyLH
+
+# Bounded contexts
+/src/Features/Stops/ @MhouneyLH
+/src/Features/Trips/ @MhouneyLH
+/src/Features/Alerts/ @MhouneyLH
+/src/Features/Ingestion/ @MhouneyLH
+/test/Features/ @MhouneyLH

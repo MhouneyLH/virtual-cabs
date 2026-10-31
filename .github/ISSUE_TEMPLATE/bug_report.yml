@@ -1,0 +1,37 @@
+name: Bug report
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: dropdown
+    id: context
+    attributes:
+      label: Context
+      options: [Stops, Trips, Alerts, Ingestion, Common, AppHost, CI / devcontainer, Not sure]
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What did you expect and what happened instead?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Start the AppHost
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: 1.2.3, 1.2.3-rc.1 or a commit sha
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or traces
+      render: text
