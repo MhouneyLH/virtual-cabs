@@ -1,4 +1,4 @@
-// One Postgres server, one database per bounded context plus a shared "orleans" database
+// One Postgres server, one database per module plus a shared "orleans" database
 // for cluster membership and reminders. Image tags are pinned on purpose.
 const string PostgresTag = "17.11";
 const string PgAdminTag = "9.18";
@@ -20,22 +20,16 @@ var postgres = builder.AddPostgres("postgres", password: postgresPassword)
 
 var orleans = postgres.AddDatabase("orleans");
 
-AddFeature<Projects.GleisGrain_Stops>("stops");
-AddFeature<Projects.GleisGrain_Trips>("trips");
-AddFeature<Projects.GleisGrain_Alerts>("alerts");
-AddFeature<Projects.GleisGrain_Ingestion>("ingestion");
+// Modular monolith: one host that contains all modules. The database keeps the plain module name
+// because it becomes the connection string name the module reads.
+var host = builder.AddProject<Projects.GleisGrain_Host>("gleis-grain")
+    .WithReference(orleans)
+    .WaitFor(orleans);
+
+foreach (var module in new[] { "stops", "trips", "alerts", "ingestion" })
+{
+    var database = postgres.AddDatabase(module);
+    host.WithReference(database).WaitFor(database);
+}
 
 await builder.Build().RunAsync();
-
-void AddFeature<TProject>(string name)
-    where TProject : IProjectMetadata, new()
-{
-    // The database keeps the plain name because it becomes the connection string name the service reads.
-    var database = postgres.AddDatabase(name);
-
-    builder.AddProject<TProject>($"{name}-service")
-        .WithReference(orleans)
-        .WithReference(database)
-        .WaitFor(orleans)
-        .WaitFor(database);
-}
