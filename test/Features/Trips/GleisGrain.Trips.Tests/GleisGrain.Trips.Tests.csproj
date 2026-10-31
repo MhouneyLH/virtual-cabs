@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="../../../../src/Features/Trips/GleisGrain.Trips/GleisGrain.Trips.csproj" />
+  </ItemGroup>
+
+</Project>
