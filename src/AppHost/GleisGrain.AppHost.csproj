@@ -1,0 +1,21 @@
+<Project Sdk="Aspire.AppHost.Sdk/13.6.4">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <AspireUseCliBundle>true</AspireUseCliBundle>
+    <UserSecretsId>gleis-grain-apphost</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.AppHost" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../Features/Stops/GleisGrain.Stops/GleisGrain.Stops.csproj" />
+    <ProjectReference Include="../Features/Trips/GleisGrain.Trips/GleisGrain.Trips.csproj" />
+    <ProjectReference Include="../Features/Alerts/GleisGrain.Alerts/GleisGrain.Alerts.csproj" />
+    <ProjectReference Include="../Features/Ingestion/GleisGrain.Ingestion/GleisGrain.Ingestion.csproj" />
+  </ItemGroup>
+
+</Project>
