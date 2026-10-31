@@ -2,22 +2,38 @@
   "version": 2,
   "dependencies": {
     "net10.0": {
-      "Microsoft.Orleans.Server": {
+      "Microsoft.Orleans.Runtime": {
         "type": "Direct",
         "requested": "[10.4.0, )",
         "resolved": "10.4.0",
-        "contentHash": "oFz5QyegFu28MJP6/EahAFYvtgQFe92CP+8/fkvQGvg4Fmx4ZNoEWlUryqe9EqSdrKN0wxgtHvQnJKXmk10TLQ==",
+        "contentHash": "oHXZf8BPfvqWKpvhuYuslZMrE/EEywaNU3BL/8udMhJt2xc52RBaGpJlYCpNudmXE8iH9ySrRajf5IvHK1/wzg==",
         "dependencies": {
           "Microsoft.CodeAnalysis.Analyzers": "5.9.0",
           "Microsoft.CodeAnalysis.Common": "5.0.0",
           "Microsoft.CodeAnalysis.Workspaces.Common": "5.0.0",
           "Microsoft.Extensions.DependencyModel": "10.0.5",
-          "Microsoft.Orleans.Persistence.Memory": "10.4.0",
-          "Microsoft.Orleans.Runtime": "10.4.0",
-          "Microsoft.Orleans.Sdk": "10.4.0",
+          "Microsoft.Orleans.Core": "10.4.0",
           "Newtonsoft.Json": "13.0.4",
           "Polly": "8.6.4",
           "Polly.Extensions": "8.6.5",
+          "System.IO.Hashing": "10.0.3",
+          "System.Memory.Data": "10.0.3"
+        }
+      },
+      "Microsoft.Orleans.Sdk": {
+        "type": "Direct",
+        "requested": "[10.4.0, )",
+        "resolved": "10.4.0",
+        "contentHash": "rNnlrIEAdlz6PFwkVNVdQ29WpGFJP/UEhRH0IyXUVNrb+9Mem5zQxwz07nwUJRtkLFaE8rClBmyveb1IWWkmDQ==",
+        "dependencies": {
+          "Microsoft.CodeAnalysis.Analyzers": "5.9.0",
+          "Microsoft.CodeAnalysis.Common": "5.0.0",
+          "Microsoft.CodeAnalysis.Workspaces.Common": "5.0.0",
+          "Microsoft.Extensions.DependencyModel": "10.0.5",
+          "Microsoft.Orleans.Analyzers": "10.4.0",
+          "Microsoft.Orleans.CodeGenerator": "10.4.0",
+          "Microsoft.Orleans.Core": "10.4.0",
+          "Newtonsoft.Json": "13.0.4",
           "System.IO.Hashing": "10.0.3",
           "System.Memory.Data": "10.0.3"
         }
@@ -128,23 +144,6 @@
           "Microsoft.Orleans.Core.Abstractions": "10.4.0",
           "Microsoft.Orleans.Runtime": "10.4.0",
           "Microsoft.Orleans.Sdk": "10.4.0",
-          "Newtonsoft.Json": "13.0.4",
-          "Polly": "8.6.4",
-          "Polly.Extensions": "8.6.5",
-          "System.IO.Hashing": "10.0.3",
-          "System.Memory.Data": "10.0.3"
-        }
-      },
-      "Microsoft.Orleans.Runtime": {
-        "type": "Transitive",
-        "resolved": "10.4.0",
-        "contentHash": "oHXZf8BPfvqWKpvhuYuslZMrE/EEywaNU3BL/8udMhJt2xc52RBaGpJlYCpNudmXE8iH9ySrRajf5IvHK1/wzg==",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "5.9.0",
-          "Microsoft.CodeAnalysis.Common": "5.0.0",
-          "Microsoft.CodeAnalysis.Workspaces.Common": "5.0.0",
-          "Microsoft.Extensions.DependencyModel": "10.0.5",
-          "Microsoft.Orleans.Core": "10.4.0",
           "Newtonsoft.Json": "13.0.4",
           "Polly": "8.6.4",
           "Polly.Extensions": "8.6.5",
@@ -368,20 +367,22 @@
           "System.Memory.Data": "10.0.3"
         }
       },
-      "Microsoft.Orleans.Sdk": {
+      "Microsoft.Orleans.Server": {
         "type": "CentralTransitive",
         "requested": "[10.4.0, )",
         "resolved": "10.4.0",
-        "contentHash": "rNnlrIEAdlz6PFwkVNVdQ29WpGFJP/UEhRH0IyXUVNrb+9Mem5zQxwz07nwUJRtkLFaE8rClBmyveb1IWWkmDQ==",
+        "contentHash": "oFz5QyegFu28MJP6/EahAFYvtgQFe92CP+8/fkvQGvg4Fmx4ZNoEWlUryqe9EqSdrKN0wxgtHvQnJKXmk10TLQ==",
         "dependencies": {
           "Microsoft.CodeAnalysis.Analyzers": "5.9.0",
           "Microsoft.CodeAnalysis.Common": "5.0.0",
           "Microsoft.CodeAnalysis.Workspaces.Common": "5.0.0",
           "Microsoft.Extensions.DependencyModel": "10.0.5",
-          "Microsoft.Orleans.Analyzers": "10.4.0",
-          "Microsoft.Orleans.CodeGenerator": "10.4.0",
-          "Microsoft.Orleans.Core": "10.4.0",
+          "Microsoft.Orleans.Persistence.Memory": "10.4.0",
+          "Microsoft.Orleans.Runtime": "10.4.0",
+          "Microsoft.Orleans.Sdk": "10.4.0",
           "Newtonsoft.Json": "13.0.4",
+          "Polly": "8.6.4",
+          "Polly.Extensions": "8.6.5",
           "System.IO.Hashing": "10.0.3",
           "System.Memory.Data": "10.0.3"
         }
