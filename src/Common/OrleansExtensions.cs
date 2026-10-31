@@ -15,8 +15,8 @@ public static class OrleansExtensions
     /// Membership and reminders live in the shared <c>orleans</c> database, grain state in the feature's own database.
     /// </summary>
     /// <param name="builder">The host builder to configure.</param>
-    /// <param name="storageName">Grain storage name; by convention equal to the feature's connection string name.</param>
-    public static TBuilder AddGleisGrainOrleans<TBuilder>(this TBuilder builder, string storageName)
+    /// <param name="storageNames">Grain storage names, one per module; by convention equal to the module's connection string name.</param>
+    public static TBuilder AddGleisGrainOrleans<TBuilder>(this TBuilder builder, params string[] storageNames)
         where TBuilder : IHostApplicationBuilder
     {
         builder.Services.AddValidatedOptions<OrleansOptions>(OrleansOptions.SectionName);
@@ -24,8 +24,10 @@ public static class OrleansExtensions
         var options = builder.Configuration.GetSection(OrleansOptions.SectionName).Get<OrleansOptions>() ?? new OrleansOptions();
         var clusteringConnection = builder.Configuration.GetConnectionString(options.ClusteringConnectionName)
             ?? throw new InvalidOperationException($"Connection string '{options.ClusteringConnectionName}' is missing.");
-        var storageConnection = builder.Configuration.GetConnectionString(storageName)
-            ?? throw new InvalidOperationException($"Connection string '{storageName}' is missing.");
+        var storages = storageNames.ToDictionary(
+            name => name,
+            name => builder.Configuration.GetConnectionString(name)
+                ?? throw new InvalidOperationException($"Connection string '{name}' is missing."));
 
         builder.UseOrleans(silo =>
         {
@@ -49,11 +51,14 @@ public static class OrleansExtensions
                 o.ConnectionString = clusteringConnection;
             });
 
-            silo.AddAdoNetGrainStorage(storageName, o =>
+            foreach (var (name, connectionString) in storages)
             {
-                o.Invariant = PostgresInvariant;
-                o.ConnectionString = storageConnection;
-            });
+                silo.AddAdoNetGrainStorage(name, o =>
+                {
+                    o.Invariant = PostgresInvariant;
+                    o.ConnectionString = connectionString;
+                });
+            }
         });
 
         return builder;

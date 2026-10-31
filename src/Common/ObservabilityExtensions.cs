@@ -22,7 +22,7 @@ public static class ObservabilityExtensions
     /// Wires OpenTelemetry logs, metrics and traces. The OTLP endpoint comes from the standard
     /// <c>OTEL_EXPORTER_OTLP_ENDPOINT</c> variable, which the Aspire AppHost sets.
     /// </summary>
-    public static TBuilder AddGleisGrainObservability<TBuilder>(this TBuilder builder, string serviceName, string featureMeterName)
+    public static TBuilder AddGleisGrainObservability<TBuilder>(this TBuilder builder, string serviceName, params string[] featureMeterNames)
         where TBuilder : IHostApplicationBuilder
     {
         builder.Services.AddValidatedOptions<MetricsOptions>(MetricsOptions.SectionName);
@@ -42,7 +42,7 @@ public static class ObservabilityExtensions
                 m.AddAspNetCoreInstrumentation()
                     .AddHttpClientInstrumentation()
                     .AddRuntimeInstrumentation()
-                    .AddMeter(featureMeterName);
+                    .AddMeter(featureMeterNames);
 
                 if (metrics.IncludeOrleansMeters)
                 {

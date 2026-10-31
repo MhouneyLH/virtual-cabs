@@ -257,23 +257,6 @@
           "System.Memory.Data": "10.0.3"
         }
       },
-      "Microsoft.Orleans.Runtime": {
-        "type": "Transitive",
-        "resolved": "10.4.0",
-        "contentHash": "oHXZf8BPfvqWKpvhuYuslZMrE/EEywaNU3BL/8udMhJt2xc52RBaGpJlYCpNudmXE8iH9ySrRajf5IvHK1/wzg==",
-        "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "5.9.0",
-          "Microsoft.CodeAnalysis.Common": "5.0.0",
-          "Microsoft.CodeAnalysis.Workspaces.Common": "5.0.0",
-          "Microsoft.Extensions.DependencyModel": "10.0.5",
-          "Microsoft.Orleans.Core": "10.4.0",
-          "Newtonsoft.Json": "13.0.4",
-          "Polly": "8.6.4",
-          "Polly.Extensions": "8.6.5",
-          "System.IO.Hashing": "10.0.3",
-          "System.Memory.Data": "10.0.3"
-        }
-      },
       "Microsoft.Orleans.Serialization": {
         "type": "Transitive",
         "resolved": "10.4.0",
@@ -399,6 +382,24 @@
       },
       "gleisgrain.common.abstractions": {
         "type": "Project"
+      },
+      "Microsoft.Orleans.Runtime": {
+        "type": "CentralTransitive",
+        "requested": "[10.4.0, )",
+        "resolved": "10.4.0",
+        "contentHash": "oHXZf8BPfvqWKpvhuYuslZMrE/EEywaNU3BL/8udMhJt2xc52RBaGpJlYCpNudmXE8iH9ySrRajf5IvHK1/wzg==",
+        "dependencies": {
+          "Microsoft.CodeAnalysis.Analyzers": "5.9.0",
+          "Microsoft.CodeAnalysis.Common": "5.0.0",
+          "Microsoft.CodeAnalysis.Workspaces.Common": "5.0.0",
+          "Microsoft.Extensions.DependencyModel": "10.0.5",
+          "Microsoft.Orleans.Core": "10.4.0",
+          "Newtonsoft.Json": "13.0.4",
+          "Polly": "8.6.4",
+          "Polly.Extensions": "8.6.5",
+          "System.IO.Hashing": "10.0.3",
+          "System.Memory.Data": "10.0.3"
+        }
       },
       "Microsoft.Orleans.Sdk": {
         "type": "CentralTransitive",
