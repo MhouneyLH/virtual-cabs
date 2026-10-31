@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <ItemGroup>
+    <ProjectReference Include="../Common/GleisGrain.Common.csproj" />
+    <ProjectReference Include="../Features/Stops/GleisGrain.Stops/GleisGrain.Stops.csproj" />
+    <ProjectReference Include="../Features/Trips/GleisGrain.Trips/GleisGrain.Trips.csproj" />
+    <ProjectReference Include="../Features/Alerts/GleisGrain.Alerts/GleisGrain.Alerts.csproj" />
+    <ProjectReference Include="../Features/Ingestion/GleisGrain.Ingestion/GleisGrain.Ingestion.csproj" />
+  </ItemGroup>
+
+</Project>
