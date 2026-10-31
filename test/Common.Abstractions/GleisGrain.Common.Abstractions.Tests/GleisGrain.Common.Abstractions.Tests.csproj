@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="../../../src/Common.Abstractions/GleisGrain.Common.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
