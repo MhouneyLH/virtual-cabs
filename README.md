@@ -2,7 +2,7 @@
 
 Showcase for Microsoft Orleans built on public transport data from Linz AG. Stops, trips and service notices are virtual actors, kept up to date with reminders and timers.
 
-The project is the demo for a talk about the actor paradigm at the .NET Stammtisch Linz. It started as an Uber-style taxi example, the structure comes from there.
+The project is the demo for a talk about the actor paradigm at the .NET Stammtisch Linz.
 
 > Work in progress. Right now this is only the scaffold: four contexts with one example endpoint each. The XML client and the real grains are still missing.
 
